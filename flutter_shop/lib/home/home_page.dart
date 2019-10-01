@@ -4,6 +4,7 @@ import 'package:flutter_shop/home/car/car_page.dart';
 import 'package:flutter_shop/home/main/main_page.dart';
 import 'package:flutter_shop/home/profile/profile_page.dart';
 import 'package:flutter_shop/home/search/search_page.dart';
+import 'package:flutter_shop/util/tool_util.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<BottomNavigationBarItem> bottomBarItems = [
+  final List<BottomNavigationBarItem> _bottomBarItems = [
     BottomNavigationBarItem(
         icon: Icon(
           Icons.home,
@@ -46,40 +47,42 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  final List<Widget> pageList = [
+  final List<Widget> _pageList = [
     MainPage(),
     SearchPage(),
     CarPage(),
     ProfilePage()
   ];
 
-  int currentIndex = 0;
+  int _currentIndex = 0;
 
-  var currentPage;
+  var _currentPage;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    currentPage = pageList[currentIndex];
+    _currentPage = _pageList[_currentIndex];
   }
 
   @override
   Widget build(BuildContext context) {
+    ToolUtils.initScreenUtil(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter Shop'),
       ),
       backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
-      body: currentPage,
+      body: _currentPage,
       bottomNavigationBar: BottomNavigationBar(
-        items: bottomBarItems,
-        currentIndex: currentIndex,
+        items: _bottomBarItems,
+        currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {
-            currentIndex = index;
-            currentPage = pageList[currentIndex];
+            _currentIndex = index;
+            _currentPage = _pageList[_currentIndex];
           });
         },
       ),
